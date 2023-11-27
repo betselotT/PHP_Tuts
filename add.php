@@ -22,7 +22,10 @@
         if(empty($_POST['ingredients'])){
             echo 'At least one ingredient is required <br />';
         } else{
-            echo htmlspecialchars($_POST['ingredients']);
+            $ingredients = $_POST['ingredients'];
+            if(!preg_match('/^[a-zA-Z\s]+)(,\s*[a-zA-Z\s]*)*$/', $ingredients)){
+                echo 'Ingredients must be a comma separated list';
+            }
             echo '<br>';
         }
     } //end of POST check
