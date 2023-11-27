@@ -1,9 +1,31 @@
 <?php
-    if(isset($_GET['submit'])){
-        echo $_GET['email'];
-        echo $_GET['title'];
-        echo $_GET['ingredients'];
-    }
+
+    if(isset($_POST['submit'])){
+        if(empty($_POST['email'])){
+            echo 'An email is required <br />';
+        } else{
+            $email = $_POST['email'];
+            if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+                echo 'Email must be a valid email address';
+            }
+            echo '<br>';
+        }
+        if(empty($_POST['title'])){
+            echo 'A title is required <br />';
+        } else{
+            $title = $_POST['title'];
+            if(!preg_match('/^[a-zA-Z\s]+$/')){
+                echo 'Title must be letters and spaces only';
+            }             
+            echo '<br>';
+        }
+        if(empty($_POST['ingredients'])){
+            echo 'At least one ingredient is required <br />';
+        } else{
+            echo htmlspecialchars($_POST['ingredients']);
+            echo '<br>';
+        }
+    } //end of POST check
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +34,7 @@
 
     <section class="container grey-text">
         <h4 class="center">Add a Pizza</h4>
-        <form class="white" action="add.php" method="GET">
+        <form class="white" action="add.php" method="POST">
              <label>Your Email:</label>
              <input type="text" name="email">
              <label>Pizza Title:</label>
